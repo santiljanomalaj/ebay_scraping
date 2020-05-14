@@ -28,6 +28,7 @@ product_list_content = soup(product_list_contents.content, 'html.parser')
 
 result_number = product_list_content.find('span',{'class', 'rcnt'}).text.replace(',','')
 per_unit = len(product_list_content.findAll('div',{'class':'lvpicinner full-width picW'}))
+result_num = 0
 for x in range(int(int(result_number)/per_unit)):
   product_content_page = requests.get("https://www.ebay.co.uk/sch/m.html?item=301829202695&hash=item46466c2307%3Ag%3AKAUAAOSwGqpdhZpq&_ssn=musicmagpie&_pgn="+str(x+1)+"&_skc="+str(x*50)+"&rt=nc")
   product_content_list = soup(product_content_page.content, 'html.parser')
@@ -35,9 +36,10 @@ for x in range(int(int(result_number)/per_unit)):
   product_lists = product_content_list.findAll('div',{'class':'lvpicinner full-width picW'})
   print("------------------------------------"+str(x+1)+"th page---------------------------------------------")
   for x in range(len(product_lists)):
-    row +=1
+    row += 1
     col = 0
-    print(str(x+1)+"th product")
+    result_num += 1
+    print(str(result_num)+"th product")
     # get the product_info
     product_info = ['','','','','','','','','','','','','','','','','','','','','','','','','','']
     product_info[0] = product_lists[x].a['href']

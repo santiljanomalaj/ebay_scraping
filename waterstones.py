@@ -59,7 +59,7 @@ for x in range(int(int(result_number)/per_unit)):
     if (product.find('ul',{'class','lst icon'}) != None):
       images = product.find('ul',{'class','lst icon'}).findAll('img')
       for image in images:
-        if(len(image_list) > 7):
+        if(len(image_list) > 6):
           break
         image_list.append(image['src'])
     else:
@@ -86,10 +86,10 @@ for x in range(int(int(result_number)/per_unit)):
         product_info[2] = ""
       for x in range(len(item_specific)):
         if(item_specific[x].text == """
-                            Format: """ ):
+									 			Format: """ ):
           product_info[8] = item_specific[x+1].span.text
         elif (item_specific[x].text == """
-                            Publisher: """ ):
+									 			Publisher: """ ):
           product_info[10] = item_specific[x+1].span.text
 
     else:
@@ -102,20 +102,20 @@ for x in range(int(int(result_number)/per_unit)):
         product_info[2] = ""  
       for x in range(len(item_specific)):
         if(item_specific[x].text == """
-                            Format: """ ):
+									 			Format: """ ):
           product_info[8] = item_specific[x+1].span.text
         elif (item_specific[x].text == """
-                            Publisher: """ ):
+									 			Publisher: """ ):
           product_info[10] = item_specific[x+1].span.text
 
     # get the about_content
 
-    if (product.find('div',{"class":"prodDetailSec"}) != None ):
-      about_this_product = product.find('div',{"class":"prodDetailSec"}).findAll("td")
+    if (product.find(id = 'viTabs_0_pd') != None ):
+      about_this_product = product.find(id = 'viTabs_0_pd').findAll("td")
       for x in range(len(about_this_product)):
         if(about_this_product[x].text == "Author(s)"):
           product_info[9] = re.sub("\s\s+"," ", about_this_product[x+1].text)
-      about_this = product.find('div', {'class':'prodDetailSec'}).findAll("tr")
+      about_this = product.find(id = 'viTabs_0_pd').findAll("tr")
       about_content = ""
       for about_each in about_this:
         product_info[12] += re.sub("\s\s+"," ", about_each.text) +"\n"

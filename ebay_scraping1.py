@@ -21,14 +21,7 @@ for title in titles:
   col += 1
 
 proxies = [
-    "44.232.52.177:8090",
-    "167.99.178.162:80",
-    "15.165.85.203:3128",
-    "198.98.55.168:8080",
-    "104.45.188.43:3128",
-    "165.227.26.121:80",
-    "167.172.254.176:8080",
-    "35.184.40.247:3128"
+    "23.21.43.50:8080",
 ]
 # set up the proxy
 def proxy_init():
@@ -43,7 +36,7 @@ def proxy_init():
 # get the product_list
 def main():
   # session & initialize the proxy
-  # session_requst = proxy_init()
+  session_requst = proxy_init()
   # wait_time = random.randint(1, 2) + random.random()
   # time.sleep(wait_time)
   product_list_contents = requests.get("https://www.ebay.co.uk/sch/musicmagpie/m.html?item=301829202695&hash=item46466c2307%3Ag%3AKAUAAOSwGqpdhZpq&rt=nc&_trksid=p2047675.l2562")
@@ -57,7 +50,7 @@ def main():
   for x in range(int(int(result_number)/per_unit)):
 
 
-    if(x+1 > 0 and x+1<20):
+    if(x+1 > 0 and x+1<2):
       # session & initialize the proxy
       # session = proxy_init()
       # wait_time = random.randint(1, 2) + random.random()
@@ -74,6 +67,8 @@ def main():
         result_num += 1
         print(str(result_num)+"th product")
         # get the product_info
+        if(result_num>1):
+          break
         product_info = ['','','','','','','','','','','','','','','','','','','','','','','','','','']
         product_info[0] = product_lists[x].a['href']
 
@@ -170,5 +165,5 @@ def main():
         for product_item in product_info:
           worksheet.write(row, col, product_item)
           col += 1
-          workbook.save("ebay_product_info_v1.xls")
+  workbook.save("ebay_product_info_v1.xls")
 main()

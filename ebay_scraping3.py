@@ -170,5 +170,5 @@ def main():
         for product_item in product_info:
           worksheet.write(row, col, product_item)
           col += 1
-          workbook.save("ebay_product_info_v3.xls")
+  workbook.save("ebay_product_info_v3.xls")
 main()

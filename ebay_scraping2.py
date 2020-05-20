@@ -21,15 +21,23 @@ for title in titles:
   col += 1
 
 proxies = [
-    "44.232.52.177:8090",
-    "167.99.178.162:80",
-    "15.165.85.203:3128",
-    "198.98.55.168:8080",
-    "104.45.188.43:3128",
-    "165.227.26.121:80",
-    "167.172.254.176:8080",
-    "35.184.40.247:3128"
-]
+    "korleone:20Korleone20@209.242.219.118:12345",
+    "korleone:20Korleone20@209.242.220.107:12345",
+    "korleone:20Korleone20@23.250.54.174:12345",
+    "korleone:20Korleone20@198.20.163.41:12345",
+    "korleone:20Korleone20@104.144.6.53:12345",
+    "korleone:20Korleone20@23.250.49.163:12345",
+    "korleone:20Korleone20@104.144.112.39:12345",
+    "korleone:20Korleone20@107.152.253.41:12345",
+    "korleone:20Korleone20@209.242.220.74:12345",
+  ]
+
+
+# Hello use this proxy format
+
+# username:password@ip:port
+
+
 # set up the proxy
 def proxy_init():
   current_proxy = random.choice(proxies)
@@ -40,31 +48,32 @@ def proxy_init():
   session = requests.Session()
   session.proxies = proxy
   return session
-# get the product_list
+
+
 def main():
   # session & initialize the proxy
-  # session_requst = proxy_init()
-  # wait_time = random.randint(1, 2) + random.random()
-  # time.sleep(wait_time)
-  product_list_contents = requests.get("https://www.ebay.co.uk/sch/musicmagpie/m.html?item=301829202695&hash=item46466c2307%3Ag%3AKAUAAOSwGqpdhZpq&rt=nc&_trksid=p2047675.l2562")
-  product_list_content = soup(product_list_contents.content, 'html.parser')
+  session = proxy_init()
+  wait_time = random.randint(1, 2) + random.random()
+  time.sleep(wait_time)
 
+  product_list_contents = session.get("https://www.ebay.co.uk/sch/musicmagpie/m.html?item=301829202695&hash=item46466c2307%3Ag%3AKAUAAOSwGqpdhZpq&rt=nc&_trksid=p2047675.l2562")
+  product_list_content = soup(product_list_contents.content, 'html.parser')
+  
   result_number = product_list_content.find('span',{'class': 'rcnt'}).text.replace(',','')
   per_unit = len(product_list_content.findAll('div',{'class':'lvpicinner full-width picW'}))
   row=0
-  result_num = 19*50
+  result_num = 0
   print(result_number)
   for x in range(int(int(result_number)/per_unit)):
 
 
-    if(x+1 > 20 and x+1<40):
       # session & initialize the proxy
-      # session = proxy_init()
-      # wait_time = random.randint(1, 2) + random.random()
-      # time.sleep(wait_time)
+      session = proxy_init()
+      wait_time = random.randint(1, 2) + random.random()
+      time.sleep(wait_time)
 
       print("------------------------------------"+str(x+1)+"th page---------------------------------------------")
-      product_content_page = requests.get("https://www.ebay.co.uk/sch/m.html?item=301829202695&hash=item46466c2307%3Ag%3AKAUAAOSwGqpdhZpq&_ssn=musicmagpie&_pgn="+str(x+1)+"&_skc="+str(x*50)+"&rt=nc")
+      product_content_page = session.get("https://www.ebay.co.uk/sch/m.html?item=301829202695&hash=item46466c2307%3Ag%3AKAUAAOSwGqpdhZpq&_ssn=musicmagpie&_pgn="+str(x+1)+"&_skc="+str(x*50)+"&rt=nc")
       product_content_list = soup(product_content_page.content, 'html.parser')
 
       product_lists = product_content_list.findAll('div',{'class':'lvpicinner full-width picW'})
@@ -78,7 +87,7 @@ def main():
         product_info[0] = product_lists[x].a['href']
 
 
-        product_page = requests.get(product_info[0])
+        product_page = session.get(product_info[0])
         product = soup(product_page.content, 'html.parser')
 
         product_info[11] = product.findAll('li', {'class': 'bc-w'})[0].text + ' > ' + product.findAll('li', {'class': 'bc-w'})[1].text
@@ -160,11 +169,11 @@ def main():
           description_page_url = product.find(id = 'desc_ifr')['src']
 
         # session & initialize the proxy
-        # session = proxy_init()
-        # wait_time = random.randint(1, 2) + random.random()
-        # time.sleep(wait_time)
+        session = proxy_init()
+        wait_time = random.randint(1, 2) + random.random()
+        time.sleep(wait_time)
 
-        description_content_page = requests.get(description_page_url)
+        description_content_page = session.get(description_page_url)
         description_content = soup(description_content_page.content, 'html.parser')
         product_info[13] = re.sub("\s\s+"," ", description_content.find(id = 'itemInfo').text)
         for product_item in product_info:

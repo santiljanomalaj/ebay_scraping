@@ -57,7 +57,7 @@ def main():
   for x in range(int(int(result_number)/per_unit)):
 
 
-    if(x+1 > 100 and x+1<120):
+    if(x+1 > 100 and x+1<=120):
       # session & initialize the proxy
       # session = proxy_init()
       # wait_time = random.randint(1, 2) + random.random()
